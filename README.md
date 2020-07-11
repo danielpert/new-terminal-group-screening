@@ -19,7 +19,8 @@ However, this project is an extension of the previous perojects in that is uses 
 * triazole
 * benzoic acid
 * isopropylbenzene
-This workspace is meant to provide simulation data for these groups not screened previously, and not fed to the machine learning model. Using this data, along with RDKit to determine the molecular descriptors, this will allow for the generalization ability of the random forest and neural networks to new data.
+
+This workspace is meant to provide simulation data for these groups not screened previously, and not fed to the machine learning model. (https://github.com/daico007/tribology-machine-learning) Using this data, along with RDKit to determine the molecular descriptors, this will allow for the generalization ability of the random forest and neural networks to new data.
 
 In this project, the 2422 monolayer systems being studied include:
 * 11 single-terminal group monolayer systems, each using one of the new terminal groups.
