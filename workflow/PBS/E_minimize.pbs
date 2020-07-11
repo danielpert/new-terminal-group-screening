@@ -1,0 +1,31 @@
+#!/bin/sh -l
+#PBS -j oe
+#PBS -N energy_minimize
+#PBS -l nodes=1:ppn=16
+#PBS -l walltime=96:00:00
+#PBS -q batch
+#PBS -M dpert@umich.edu
+#PBS -m abe 
+#PBS -e /home/danielpert/TRUE-nanotribology/workflow/PBS/E_minimize_error.txt
+#PBS -o /home/danielpert/TRUE-nanotribology/workflow/PBS/E_minimize_output.txt
+
+cd /home/danielpert/TRUE-nanotribology/workflow/example_simulation  # This is the location wherever you called the qsub command
+
+# Loading the software you need
+module load gromacs/2018.7
+module load lammps/30Jun2020
+# Run the command, either python code or simulation
+lmp_mpi -in ../util/mdp_files/in.minimize -log minimize.log
+echo 0| gmx trjconv -s init.gro -f minimize.xtc -o minimize.gro  -b 1.0 -e 1.0
+gmx grompp -f ../util/mdp_files/em.mdp -c minimize.gro -p init.top -n init.ndx -o em.tpr -maxwarn 2
+gmx mdrun -v -deffnm em -s em.tpr -cpi em.cpt -nt 16 -gpu_id 01
+
+
+
+
+
+
+
+
+
+

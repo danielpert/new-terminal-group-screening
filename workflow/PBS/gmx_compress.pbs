@@ -1,0 +1,29 @@
+#!/bin/sh -l
+#PBS -j oe
+#PBS -N NVT_equilibrate
+#PBS -l nodes=1:ppn=16
+#PBS -l walltime=96:00:00
+#PBS -q batch
+#PBS -M dpert@umich.edu
+#PBS -m abe 
+#PBS -e /home/danielpert/TRUE-nanotribology/workflow/PBS/gmx_compress_error.txt
+#PBS -o /home/danielpert/TRUE-nanotribology/workflow/PBS/gmx_compress_output.txt
+
+cd /home/danielpert/TRUE-nanotribology/workflow/example_simulation  # This is the location wherever you called the qsub command
+echo `cat $PBS_NODEFILE`
+# Loading the software you need
+module load gromacs/2018.7
+module load lammps/30Jun2020
+# Run the command, either python code or simulation
+# Grompp
+gmx grompp -f ../util/mdp_files/compress.mdp -c nvt.gro -p init.top -n init.ndx -o compress.tpr -maxwarn 3
+# Run GROMACS
+gmx mdrun -nt 16 -v -deffnm compress -s compress.tpr -cpi compress.cpt -gpu_id 01
+
+
+
+
+
+
+
+

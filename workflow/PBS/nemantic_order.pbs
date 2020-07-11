@@ -1,0 +1,25 @@
+#!/bin/sh -l
+#PBS -j oe
+#PBS -N 'nemantic_order'
+#PBS -l nodes=1:ppn=16
+#PBS -l walltime=96:00:00
+#PBS -q batch
+#PBS -M dpert@umich.edu
+#PBS -m abe 
+#PBS -e /home/danielpert/TRUE-nanotribology/workflow/PBS/nemantic_order_error.txt
+#PBS -o /home/danielpert/TRUE-nanotribology/workflow/PBS/nemantic_order_output.txt
+
+cd /home/danielpert/TRUE-nanotribology/workflow/example_simulation  # This is the location wherever you called the qsub command
+echo `cat $PBS_NODEFILE`
+# Loading the software you need
+module load gromacs/2018.7
+module load lammps/30Jun2020
+# Run the command, either python code or simulation
+# Unwrap stuff
+echo 0 | gmx trjconv -f shear_5nN.part0001.xtc -o shear_5nN-unwrapped.xtc -s shear_5nN.part0001.gro -pbc nojump
+
+
+
+
+
+
